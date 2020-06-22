@@ -1,0 +1,35 @@
+alliance = {
+  first = "CAN"
+  second = "NEN"
+  start_date = 1836.1.1
+  end_date = 1936.1.1
+}
+
+alliance = {
+  first = "FRA"
+  second = "NEH"
+  start_date = 1836.1.1
+  end_date = 1936.1.1
+}
+
+alliance = {
+  first = "FRA"
+  second = "IRE"
+  start_date = 1836.1.1
+  end_date = 1936.1.1
+}
+
+alliance = {
+  first = "FRA"
+  second = "MLT"
+  start_date = 1836.1.1
+  end_date = 1936.1.1
+}
+
+
+alliance = {
+  first = "BRI"
+  second = "MLT"
+  start_date = 1836.1.1
+  end_date = 1936.1.1
+}

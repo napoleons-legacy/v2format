@@ -1,0 +1,26 @@
+{
+  "paths": {
+    "/": {
+      "tabWidth": 2
+    },
+    "map": {
+      "bracketSpacing": false
+    },
+    "map/terrain": {
+      "assignmentSpacing": false
+    },
+    "map/terrain\\rivers": {
+      "tabWidth": 3,
+      "assignmentSpacing": true,
+      "singleLineBlock": false,
+      "bracketSpacing": true
+    },
+    "/map/default.map": {
+      "singleLineBlock": false,
+      "bracketWraparound": 25
+    },
+    "/news": {
+      "bracketWraparound": 1
+    }
+  }
+}

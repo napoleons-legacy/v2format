@@ -1,0 +1,19 @@
+{
+  "paths": {
+    "/": {
+      "bracketWraparound": 1
+    },
+    "2tab": {
+      "tabWidth": 2
+    },
+    "noassignmentspace": {
+      "assignmentSpacing": false
+    },
+    "nobracketspace": {
+      "bracketSpacing": false
+    },
+    "nosingleexpr": {
+      "singleLineBlock": false
+    }
+  }
+}

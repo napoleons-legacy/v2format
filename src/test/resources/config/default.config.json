@@ -1,0 +1,14 @@
+{
+  "paths": {
+    "\\": {
+      "tabWidth": 2
+    },
+    "/map\\default.map": {
+      "singleLineBlock": false,
+      "bracketWraparound": 25
+    },
+    "\\news": {
+      "bracketWraparound": 1
+    }
+  }
+}
