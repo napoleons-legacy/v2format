@@ -16,6 +16,8 @@ internal class ConfigTest {
             assertKey("/", default)
             assertKey("/map/default.map", default)
             assertKey("/news", default)
+
+            assertEquals(emptyList<String>(), Config.excludeFiles)
         }
 
         testConfig("/config/default.config.json") {
@@ -24,6 +26,8 @@ internal class ConfigTest {
             assertKey("/", default)
             assertKey("/map/default.map", default.copy(singleLineBlock = false, bracketWraparound = 25))
             assertKey("/news", default.copy(bracketWraparound = 1))
+
+            assertEquals(listOf("map/positions.txt"), Config.excludeFiles)
         }
 
         testConfig("/config/complex.config.json") {
@@ -42,6 +46,12 @@ internal class ConfigTest {
                 default.copy(bracketSpacing = false, singleLineBlock = false, bracketWraparound = 25)
             )
             assertKey("/news", default.copy(bracketWraparound = 1))
+
+            assertEquals(
+                listOf(
+                    "/map/positions.txt", "map/region.txt", "event/dummy.txt", "a/b/c/d/e/f.txt"
+                ), Config.excludeFiles
+            )
         }
     }
 

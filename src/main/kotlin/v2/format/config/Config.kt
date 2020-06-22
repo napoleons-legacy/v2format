@@ -3,20 +3,28 @@ package v2.format.config
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import v2.format.asUnix
 import java.io.File
 
 object Config {
     @Serializable
-    private data class ConfigData(val paths: Map<String, FormatOptionsLayer>)
+    private data class ConfigData(
+        val paths: Map<String, FormatOptionsLayer>,
+        val excludeFiles: List<String> = emptyList()
+    )
 
     private val configTree = ConfigTree()
+    lateinit var excludeFiles: List<String>
 
     fun loadConfig(file: File) {
         val json = Json(JsonConfiguration.Stable)
 
         if (file.exists()) {
             val configData = json.parse(ConfigData.serializer(), file.readText())
+            excludeFiles = configData.excludeFiles.map(String::asUnix)
             buildTree(configData)
+        } else {
+            excludeFiles = emptyList()
         }
     }
 

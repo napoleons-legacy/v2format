@@ -22,5 +22,11 @@
     "/news": {
       "bracketWraparound": 1
     }
-  }
+  },
+  "excludeFiles": [
+    "/map\\positions.txt",
+    "map/region.txt",
+    "event/dummy.txt",
+    "a\\b/c\\d\\e/f.txt"
+  ]
 }

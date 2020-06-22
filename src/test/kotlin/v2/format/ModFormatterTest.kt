@@ -6,6 +6,7 @@ import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import v2.format.config.Config
 import java.io.File
 import java.io.IOException
 
@@ -46,6 +47,8 @@ internal class ModFormatterTest {
 
     @Test
     fun `Test unusable mod folder`() {
+        Config.excludeFiles = emptyList()
+
         val file = mockk<File>()
         every { file.isDirectory } returns true
 
@@ -65,6 +68,10 @@ internal class ModFormatterTest {
             fileTreeWalk.iterator()
         } returns modFiles.iterator()
 
+        every {
+            file.path
+        } returns "mock/path"
+
         val modFormatter = ModFormatter(file, fileFormatter)
         modFormatter.format()
 
@@ -73,6 +80,8 @@ internal class ModFormatterTest {
 
     @Test
     fun `Test good mod folder`() {
+        Config.excludeFiles = emptyList()
+
         val file = mockk<File>()
         every { file.isDirectory } returns true
 
@@ -95,6 +104,10 @@ internal class ModFormatterTest {
             fileFormatter.formatFile(any())
         } just Runs
 
+        every {
+            file.path
+        } returns "mock/path"
+
         val modFormatter = ModFormatter(file, fileFormatter)
         modFormatter.format()
 
@@ -105,6 +118,7 @@ internal class ModFormatterTest {
         val mock = mockk<File>()
         every { mock.name } returns name
         every { mock.isFile } returns isFile
+        every { mock.path } returns name
 
         return mock
     }

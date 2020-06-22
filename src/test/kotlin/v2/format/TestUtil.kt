@@ -17,4 +17,6 @@ fun resetConfig() {
     modifiersField.isAccessible = true
     modifiersField.setInt(tree, tree.modifiers and Modifier.FINAL.inv())
     tree.set(tree.javaClass.kotlin.objectInstance, ConfigTree())
+
+    Config.excludeFiles = emptyList()
 }

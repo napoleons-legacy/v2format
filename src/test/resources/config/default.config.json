@@ -10,5 +10,8 @@
     "\\news": {
       "bracketWraparound": 1
     }
-  }
+  },
+  "excludeFiles": [
+    "map/positions.txt"
+  ]
 }

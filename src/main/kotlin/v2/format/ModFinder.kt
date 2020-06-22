@@ -25,7 +25,6 @@ class ModFinder {
             it.trimStart().startsWith("user_dir")
         } ?: throw IOException("No entry named 'user_dir' for mod file '${modFile.name}'")
 
-
         val modFolderName = line.substringAfter('=').trim().removeSurrounding("\"")
         return File(modFolderName)
     }

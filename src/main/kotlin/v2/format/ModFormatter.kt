@@ -1,5 +1,6 @@
 package v2.format
 
+import v2.format.config.Config
 import java.io.File
 import java.io.IOException
 
@@ -19,6 +20,6 @@ class ModFormatter(private val modFolder: File, private val fileFormatter: FileF
     }
 
     private fun filterFile(file: File) = with(file) {
-        isFile && extension in goodExtensions
+        isFile && extension in goodExtensions && relativeTo(modFolder).path.asUnix() !in Config.excludeFiles
     }
 }
