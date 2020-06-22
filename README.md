@@ -232,9 +232,24 @@ To override it, a negating entry must be put into `/map`.
 
 ---
 
-Paths will be evaluated from the top to the bottom. 
-If there are two identical keys defined, the last defined entry is what is chosen.
-The order of paths does not matter.
+If there are two identical keys defined for one path, the last defined entry is what is chosen.
+However, the ordering of paths won't otherwise matter.
+
+```json
+{
+  "paths": {
+    "/map": {
+      "tabWidth": 2
+    },
+    "/": {
+      "tabWidth": 4,
+      "assignmentSpacing": false
+    }
+  }
+}
+```
+
+This will evaluate identically to the above section.
 
 ---
 
