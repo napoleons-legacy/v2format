@@ -52,9 +52,9 @@ Without any external configuration, the style used is:
 }
 ```
 
-#### Paths
+### Paths
 
-##### Terminology
+#### Terminology
 
 An `expression` is either an assignment or a braced expression.
 
@@ -69,11 +69,11 @@ A string is a quoted section of text that looks like `"text"`.
 An identifier is a unquoted contiguous piece of text that can look like `identifier`.
 It can contain digits in it, but cannot be completely composed of digits, otherwise it would be a number.
 
-##### Keys
+#### Keys
 
 There are five rules that can be configured for each path.
 
-###### tabWidth
+##### tabWidth
 
 The rule `tabWidth` defines the number of spaces per level of indentation.
 
@@ -98,7 +98,7 @@ block = {
 }
 ```
 
-###### bracketSpacing
+##### bracketSpacing
 
 The rule `bracketSpacing` if true, places a space between brackets if they are a single line expression.
 If false, no spaces will be put in.
@@ -117,7 +117,7 @@ block = { key = value }
 block = {key = value}
 ```
 
-###### assignmentSpacing
+##### assignmentSpacing
 
 The rule `assignmentSpacing` if true, places a single space between all equal signs `=`.
 If false, no spaces will be put in.
@@ -140,7 +140,7 @@ block={
 }
 ```
 
-###### singleLineBlock
+##### singleLineBlock
 
 The rule `singleLineBlock` if true, allows for braced expressions with one inner element to be placed
 on one line. This only applies if the inner element is not another braced expression.
@@ -171,7 +171,7 @@ block = {
 }
 ```
 
-###### bracketWraparound
+##### bracketWraparound
 
 The rule `bracketWraparound` defines the maximum number of constant values that will be placed on a single line.
 If there exists an overflow, the values will continue into the next line.
@@ -244,7 +244,7 @@ Placing extra slashes such as `map///terrain` is undefined behavior and should b
 
 ---
 
-#### Exclude Files
+### Exclude Files
 
 Files can be purposefully excluded which will lead to them not being formatted.
 This is best fit for files that can be modified by external programs or by choice.
@@ -252,7 +252,7 @@ A recommended exclusion is `map/positions.txt` since it tends to be modified pro
 
 The entry `excludeFiles` in the json file can be omitted if there is nothing to exclude.
 
-#### Formatting Semantics
+### Formatting Semantics
 
 * If a file cannot be successfully parsed due to syntax errors, the error will be reported and the file skipped.
 * Most contextual spacing between expressions is preserved.
