@@ -45,7 +45,12 @@ class Main : CliktCommand(help = "A program formatter for Victoria 2 mods.") {
         val modFolder = folder ?: finder.getModFolder(File("."))
         val modConfig = config ?: modFolder.resolveSibling("v2format.config.json")
 
-        Config.loadConfig(modConfig)
+        try {
+            Config.loadConfig(modConfig)
+        } catch (e: Exception) {
+            throw RuntimeException("Config file ${modConfig.name} is incorrect. \n${e.message}")
+        }
+
         val fileFormatter = FileFormatter(modFolder)
 
         val modFormatter = ModFormatter(modFolder, fileFormatter)
