@@ -9,7 +9,7 @@ class ModFinder {
         val modFiles = file.listFiles { pathName -> pathName.extension == "mod" }!!
 
         if (modFiles.isEmpty()) {
-            throw IOException("No .mod file in current directory found.")
+            throw IOException("No .mod file in directory found.")
         }
 
         if (modFiles.size > 1) {
@@ -29,4 +29,3 @@ class ModFinder {
         return File(modFolderName)
     }
 }
-

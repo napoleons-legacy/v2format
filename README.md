@@ -12,19 +12,40 @@ $ java -jar v2format.jar
 
 $ java -jar v2format.jar --help
 
+$ java -jar v2format.jar --config path/to/config
+
 $ java -jar v2format.jar --folder path/to/mod
+
+$ java -jar v2format.jar --file path/to/file
+
+$ java -jar v2format.jar --file path/to/file --config path/to/config
+
+$ java -jar v2format.jar --folder path/to/mod --file path/to/file
 
 $ java -jar v2format.jar --folder path/to/mod --config path/to/config
 
-$ java -jar v2format.jar --config path/to/config
+$ java -jar v2format.jar --folder path/to/mod --file path/to/file --config path/to/config
 ```
 
 ### `--folder`
 
-The `--folder` argument is by default the directory from which `v2format.jar` was executed.
+The `--folder` argument is by default the directory from which `v2format.jar` was executed, 
+also known as the current directory.
 The program will then search for a single `.mod` file and open up the mod based off the file results.
 If no `.mod` file is found or multiple are found, the program exits. 
 In those cases, `--folder` should be used.
+
+### `--file`
+
+The `--file` argument is an optional argument and has no default value.
+If the argument is provided, the program will still search for a `.mod` file and configuration in the same directory.
+The `--folder` argument still applies to defining the mod and configuration.
+If no `.mod` file is found, the program exits.
+If the file passed in as an argument cannot be formatted by way of its extension or exclusion configuration, the program will exit.
+
+Note that it is possible to use the `--folder` argument to indicate the mod to format while passing in an argument
+to `--file` that is in a different directory. 
+It is important to know that excluding files is based off the relative path from the specified mod directory and not some pattern.
 
 ### `--config`
 

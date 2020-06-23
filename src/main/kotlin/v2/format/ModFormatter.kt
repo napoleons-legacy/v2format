@@ -15,11 +15,11 @@ class ModFormatter(private val modFolder: File, private val fileFormatter: FileF
 
     fun format() {
         modFolder.walk()
-            .filter(::filterFile)
+            .filter(::isFormattable)
             .forEach(fileFormatter::formatFile)
     }
 
-    private fun filterFile(file: File) = with(file) {
+    fun isFormattable(file: File) = with(file) {
         isFile && extension in goodExtensions && relativeTo(modFolder).path.asUnix() !in Config.excludeFiles
     }
 }
