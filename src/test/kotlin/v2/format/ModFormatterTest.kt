@@ -40,7 +40,7 @@ internal class ModFormatterTest {
         } returns emptyList<File>().iterator()
 
         val modFormatter = ModFormatter(file, fileFormatter)
-        modFormatter.format()
+        modFormatter.format(file)
 
         verify { fileFormatter wasNot Called }
     }
@@ -59,7 +59,10 @@ internal class ModFormatterTest {
             mockFile("useless.rb", true),
             mockFile("v2.kt", true),
             mockFile("format.cpp", false),
-            mockFile("folder.txt/", false)
+            mockFile("folder.txt/", false, canRead = false),
+            mockFile("unreadable.txt", true, canRead = false, canWrite = true),
+            mockFile("unwriteable.txt", true, canRead = true, canWrite = false),
+            mockFile("untouchable.txt", true, canRead = false, canWrite = false)
         )
 
         val fileTreeWalk = mockk<FileTreeWalk>()
@@ -73,7 +76,7 @@ internal class ModFormatterTest {
         } returns "mock/path"
 
         val modFormatter = ModFormatter(file, fileFormatter)
-        modFormatter.format()
+        modFormatter.format(file)
 
         verify { fileFormatter wasNot Called }
     }
@@ -91,6 +94,7 @@ internal class ModFormatterTest {
             mockFile("valid.txt", true),
             mockFile("clean.txt", true),
             mockFile("directory/", false),
+            mockFile("unreadable/", false, canRead = false),
             mockFile("nice.map", true)
         )
 
@@ -109,16 +113,19 @@ internal class ModFormatterTest {
         } returns "mock/path"
 
         val modFormatter = ModFormatter(file, fileFormatter)
-        modFormatter.format()
+        modFormatter.format(file)
 
         verify(exactly = 3) { fileFormatter.formatFile(any()) }
     }
 
-    private fun mockFile(name: String, isFile: Boolean): File {
+    private fun mockFile(name: String, isFile: Boolean, canRead: Boolean = true, canWrite: Boolean = true): File {
         val mock = mockk<File>()
         every { mock.name } returns name
         every { mock.isFile } returns isFile
+        every { mock.isDirectory } returns !isFile
         every { mock.path } returns name
+        every { mock.canRead() } returns canRead
+        every { mock.canWrite() } returns canWrite
 
         return mock
     }

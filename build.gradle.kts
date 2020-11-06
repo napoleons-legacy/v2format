@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.serialization") version "1.3.70"
+    kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
     antlr
     idea
 }
@@ -17,7 +17,6 @@ version = "1.0"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 val genDir = file("${project.buildDir}/generated-src/antlr/main/v2/format/antlr")
@@ -37,17 +36,15 @@ sourceSets {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationVersion")
-
-    implementation("com.github.ajalt:clikt:$cliktVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
+    implementation("com.github.ajalt.clikt:clikt:$cliktVersion")
 
     antlr("org.antlr:antlr4:$antlrVersion")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.3.72")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
 }
 
 configure<JavaPluginConvention> {

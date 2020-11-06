@@ -2,9 +2,10 @@ package v2.format.config
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import v2.format.asUnix
 import java.io.File
+
+const val CONFIG_DEFAULT_NAME = "v2format.config.json"
 
 object Config {
     @Serializable
@@ -17,10 +18,12 @@ object Config {
     lateinit var excludeFiles: List<String>
 
     fun loadConfig(file: File) {
-        val json = Json(JsonConfiguration.Stable)
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
 
         if (file.exists()) {
-            val configData = json.parse(ConfigData.serializer(), file.readText())
+            val configData = json.decodeFromString(ConfigData.serializer(), file.readText())
             excludeFiles = configData.excludeFiles.map(String::asUnix)
             buildTree(configData)
         } else {

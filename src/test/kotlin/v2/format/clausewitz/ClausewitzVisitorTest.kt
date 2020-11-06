@@ -27,6 +27,23 @@ internal class ClausewitzVisitorTest {
     }
 
     @Test
+    fun `Test visit program with different linefeeds`() {
+        testInput(
+            ClausewitzParser::program,
+            FormatOptions(assignmentSpacing = false),
+            "a=b\r\nc=d\r\ne=f",
+            "a=b\nc=d\ne=f\n"
+        )
+
+        testInput(
+            ClausewitzParser::program,
+            FormatOptions(assignmentSpacing = false),
+            "a=b\nc=d\ne=f",
+            "a=b\nc=d\ne=f\n"
+        )
+    }
+
+    @Test
     fun `Test visit assignExpr`() {
         testInput(
             ClausewitzParser::assignExpr,
@@ -696,6 +713,30 @@ level3 = { #comment3
     # ### }}}}
 }
 """
+        )
+    }
+
+    @Test
+    fun `Test comments with padding`() {
+        testInput(
+            ClausewitzParser::expr,
+            FormatOptions(),
+            "a = b # comment   ",
+            "a = b # comment"
+        )
+
+        testInput(
+            ClausewitzParser::expr,
+            FormatOptions(),
+            "a = b #      comment   ",
+            "a = b #      comment"
+        )
+
+        testInput(
+            ClausewitzParser::expr,
+            FormatOptions(),
+            "a = b #      comment",
+            "a = b #      comment"
         )
     }
 

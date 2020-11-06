@@ -1,51 +1,48 @@
 # V2 Format
-A program formatter for Victoria 2
+A program formatter for Victoria 2.
 
 ## Usage
-Download `v2format.jar` from the latest release in the release tab.
+Download `v2format.jar` from the latest release in the releases section.
 
 A default configuration is provided as well. 
-It's recommended that formatting is only done in repositories in the chance that a reversion is desired.
+It's recommended that formatting is only done in repositories to control reversions.
 
 ```
 $ java -jar v2format.jar
 
 $ java -jar v2format.jar --help
 
+$ java -jar v2format.jar --mod path/to/mod
+
+$ java -jar v2format.jar --mod path/to/mod --file path/to/mod/file
+
 $ java -jar v2format.jar --config path/to/config
 
-$ java -jar v2format.jar --folder path/to/mod
+$ java -jar v2format.jar --mod path/to/mod --config path/to/config
 
-$ java -jar v2format.jar --file path/to/file
-
-$ java -jar v2format.jar --file path/to/file --config path/to/config
-
-$ java -jar v2format.jar --folder path/to/mod --file path/to/file
-
-$ java -jar v2format.jar --folder path/to/mod --config path/to/config
-
-$ java -jar v2format.jar --folder path/to/mod --file path/to/file --config path/to/config
+$ java -jar v2format.jar --mod path/to/mod --file path/to/mod/file --config path/to/config
 ```
 
-### `--folder`
+### `--mod`
 
-The `--folder` argument is by default the directory from which `v2format.jar` was executed, 
-also known as the current directory.
-The program will then search for a single `.mod` file and open up the mod based off the file results.
-If no `.mod` file is found or multiple are found, the program exits. 
-In those cases, `--folder` should be used.
+The `--mod` argument specifies the directory to format, bypassing `.mod` file reading.
+The program searches for a single `.mod` file in the current directory, acquiring the mod directory from it.
+
+If there is no `.mod` file or multiple exist, the program exits due to not knowing which mod to format. 
+In those cases, `--mod` should be used to specify which mod should be formatted.
 
 ### `--file`
 
 The `--file` argument is an optional argument and has no default value.
-If the argument is provided, the program will still search for a `.mod` file and configuration in the same directory.
-The `--folder` argument still applies to defining the mod and configuration.
-If no `.mod` file is found, the program exits.
-If the file passed in as an argument cannot be formatted by way of its extension or exclusion configuration, the program will exit.
+The `--mod` argument must be provided in order to use configurations.
+It allows either files or directories to be formatted specifically without the rest of the mod being formatted with it.
 
-Note that it is possible to use the `--folder` argument to indicate the mod to format while passing in an argument
+If the file passed in as an argument cannot be formatted by way of its
+extension, exclusion configuration, or read/write property, the program will exit.
+
+Note: it is possible to use the `--mod` argument to indicate the mod to format while passing in an argument
 to `--file` that is in a different directory. 
-It is important to know that excluding files is based off the relative path from the specified mod directory and not some pattern.
+Excluding files is relative to the mod directory path, and not absolute.
 
 ### `--config`
 
@@ -77,18 +74,18 @@ Without any external configuration, the style used is:
 
 #### Terminology
 
-An `expression` is either an assignment or a braced expression.
+An `expression` is either an assignment, or a braced expression.
 
 An `assignment` looks can look like either `key = value` or `key = { ...values }`.
 
 A `braced expression` is the latter form of an assignment.
 It can also be the `{ ... values }` part of `key = { { ...values } }`,
-however this use case is noticeably only used in `map/positions.txt` and can be ignored.
+however this use case only has usage in `map/positions.txt` and can be ignored.
 
 A string is a quoted section of text that looks like `"text"`.
 
 An identifier is a unquoted contiguous piece of text that can look like `identifier`.
-It can contain digits in it, but cannot be completely composed of digits, otherwise it would be a number.
+It can contain digits in it, but cannot be solely composed of digits, otherwise it would be a number.
 
 #### Keys
 
@@ -253,8 +250,8 @@ To override it, a negating entry must be put into `/map`.
 
 ---
 
-If there are two identical keys defined for one path, the last defined entry is what is chosen.
-However, the ordering of paths won't otherwise matter.
+If there are two identical keys defined for one path, the latest defined entry is chosen.
+The ordering of paths won't otherwise matter.
 
 ```json
 {

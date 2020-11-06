@@ -15,21 +15,22 @@ class ClausewitzVisitor(
 ) : ClausewitzParserBaseVisitor<CharSequence>() {
     private var indentation = 0
 
-    override fun visitProgram(ctx: ClausewitzParser.ProgramContext): String = buildString {
+    override fun visitProgram(ctx: ClausewitzParser.ProgramContext) = buildString {
         appendCosmetic(-1, false)
 
         for (child in ctx.expr()) {
             append(visit(child))
         }
 
-        dropLastNewlines().appendln()
+        dropLastNewlines()
+        appendln()
     }
 
-    override fun visitAssignExpr(ctx: ClausewitzParser.AssignExprContext): StringBuilder = StringBuilder()
-        .append(visitAssignType(ctx.assignType()))
-        .appendAround(options.assignmentSpacing, "=")
-        .append(visitAssignValue(ctx.assignValue()))
-        .appendCosmetic(ctx.stop.tokenIndex, true)
+    override fun visitAssignExpr(ctx: ClausewitzParser.AssignExprContext) =
+        StringBuilder(visitAssignType(ctx.assignType()))
+            .appendAround(options.assignmentSpacing, "=")
+            .append(visitAssignValue(ctx.assignValue()))
+            .appendCosmetic(ctx.stop.tokenIndex, true)
 
     override fun visitBraceExpr(ctx: ClausewitzParser.BraceExprContext): StringBuilder {
         val sb = StringBuilder("{")
@@ -78,36 +79,29 @@ class ClausewitzVisitor(
                     sb.append(' ')
                 }
 
-                sb.append(visit(it))
-                    .appendCosmetic(it.start.tokenIndex, false)
+                sb.append(visit(it)).appendCosmetic(it.start.tokenIndex, false)
 
                 idx = if (sb.endsWith("\n")) 0 else idx + 1
             }
         }
 
-        sb.dropLastNewlines()
-            .indentln()
+        sb.dropLastNewlines().indentln()
     }
 
-    private fun appendExprBlock(
-        sb: StringBuilder,
-        values: List<ClausewitzParser.BraceValueContext>
-    ) {
+    private fun appendExprBlock(sb: StringBuilder, values: List<ClausewitzParser.BraceValueContext>) {
         indentBlock {
             values.forEach {
-                sb.cleanIndent()
-                    .append(visit(it))
+                sb.cleanIndent().append(visit(it))
             }
         }
 
-        sb.dropLastNewlines()
-            .indentln()
+        sb.dropLastNewlines().indentln()
     }
 
     private fun appendEmptyBraceValue(sb: StringBuilder) {
         if (!options.singleLineBlock && sb.endsWith('{')) {
             sb.indentln()
-        } else if (sb.endsWith("\n")) {
+        } else if (sb.endsWith('\n')) {
             sb.indent()
         }
     }
@@ -116,20 +110,17 @@ class ClausewitzVisitor(
         val isAssignBraceExpr = isAssignBraceExpr(first)
         if (!options.singleLineBlock || isAssignBraceExpr || anyCommentsAfter(first)) {
             indentBlock {
-                sb.cleanIndent()
-                    .append(visit(first))
+                sb.cleanIndent().append(visit(first))
 
                 if (first.exprType() != null) {
                     val cosmetic = getCosmetic(first.stop.tokenIndex, false).trim()
                     if (cosmetic.isNotEmpty()) {
-                        sb.append(' ')
-                            .append(cosmetic)
+                        sb.append(' ').append(cosmetic)
                     }
                 }
             }
 
-            sb.dropLastNewlines()
-                .indentln()
+            sb.dropLastNewlines().indentln()
         } else {
             val firstValue = with(visit(first)) {
                 if (this is StringBuilder) {
@@ -143,9 +134,9 @@ class ClausewitzVisitor(
         }
     }
 
-    override fun visitTerminal(node: TerminalNode): String = node.text
+    override fun visitTerminal(node: TerminalNode) = node.text
 
-    override fun defaultResult(): String = ""
+    override fun defaultResult() = ""
 
     private fun anyCommentsAfter(first: ParserRuleContext): Boolean {
         for (idx in first.stop.tokenIndex + 1 until tokenStream.size()) {
@@ -160,7 +151,7 @@ class ClausewitzVisitor(
         return false
     }
 
-    private fun isAssignBraceExpr(first: ClausewitzParser.BraceValueContext): Boolean =
+    private fun isAssignBraceExpr(first: ClausewitzParser.BraceValueContext) =
         first.expr()?.assignExpr()?.assignValue()?.braceExpr() != null
 
     private inline fun indentBlock(block: () -> Unit) {
@@ -174,7 +165,7 @@ class ClausewitzVisitor(
 
         var prev: Token? = if (start < 0) null else tokenStream[start]
         var idx = start + 1
-        loop@ while (idx < tokenStream.size()) {
+        while (idx < tokenStream.size()) {
             val next = tokenStream[idx]
 
             when (next.channel) {
@@ -187,12 +178,12 @@ class ClausewitzVisitor(
                         }
                     }
 
-                    sb.append(next.text)
+                    sb.append(next.text.trimEnd())
                 }
                 ClausewitzLexer.NEWLINE_CHANNEL -> {
                     sb.append(next.text.replace("\r", ""))
                 }
-                else -> break@loop
+                else -> break
             }
 
             prev = next
@@ -215,12 +206,11 @@ class ClausewitzVisitor(
         return this
     }
 
-    private fun StringBuilder.appendAround(flag: Boolean, s: CharSequence): StringBuilder =
-        if (flag) {
-            append(' ').append(s).append(' ')
-        } else {
-            append(s)
-        }
+    private fun StringBuilder.appendAround(flag: Boolean, s: CharSequence): StringBuilder = if (flag) {
+        append(' ').append(s).append(' ')
+    } else {
+        append(s)
+    }
 
     private fun StringBuilder.appendCosmetic(start: Int, allowWhitespace: Boolean): StringBuilder =
         append(getCosmetic(start, allowWhitespace))

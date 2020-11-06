@@ -13,12 +13,12 @@ import v2.format.config.FormatOptions
 import java.io.File
 import java.nio.charset.Charset
 
-class FileFormatter(private val modFolder: File) {
+class FileFormatter(private val modRootFolder: File) {
     private val charset = Charset.forName("cp1252")
 
     fun formatFile(file: File) {
         try {
-            val relativeFile = file.relativeTo(modFolder)
+            val relativeFile = file.relativeTo(modRootFolder)
             val options = Config[relativeFile.path]
 
             val formattedProgram = formatProgram(file, options)

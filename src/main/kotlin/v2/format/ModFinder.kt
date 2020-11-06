@@ -5,7 +5,7 @@ import java.io.IOException
 
 class ModFinder {
     @Throws(IOException::class)
-    fun getModFolder(file: File): File {
+    fun getModFromDirectory(file: File): File {
         val modFiles = file.listFiles { pathName -> pathName.extension == "mod" }!!
 
         if (modFiles.isEmpty()) {
@@ -17,15 +17,15 @@ class ModFinder {
         }
 
         val firstModFile = modFiles.first()
-        return file.resolve(getModDirectory(firstModFile))
+        return file.resolve(getModFromModFile(firstModFile))
     }
 
-    private fun getModDirectory(modFile: File): File {
+    fun getModFromModFile(modFile: File): File {
         val line = modFile.readLines().firstOrNull {
-            it.trimStart().startsWith("user_dir")
-        } ?: throw IOException("No entry named 'user_dir' for mod file '${modFile.name}'")
+            it.trimStart().startsWith("path")
+        } ?: throw IOException("No entry named 'path' for mod file '${modFile.name}'")
 
-        val modFolderName = line.substringAfter('=').trim().removeSurrounding("\"")
-        return File(modFolderName)
+        val modRootName = line.substringAfter('=').trim().removeSurrounding("\"").drop(4)
+        return File(modRootName)
     }
 }
