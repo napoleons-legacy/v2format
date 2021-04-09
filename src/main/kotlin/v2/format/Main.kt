@@ -31,6 +31,7 @@ class Main : CliktCommand(help = "A program formatter for Victoria 2 mods.") {
     private val formatOptions by FormatOptions().cooccurring()
 
     private val configOption by option(
+        "--config",
         help = "Specifies the configuration file, otherwise it uses the file '$CONFIG_DEFAULT_NAME'"
     ).file(
         mustExist = true,
