@@ -1,0 +1,18 @@
+{
+  "paths": {
+    "common/cb_types.txt": {
+      "bracketWraparound": 1
+    },
+    "map/default.map": {
+      "singleLineBlock": false,
+      "bracketWraparound": 25
+    },
+    "news": {
+      "bracketWraparound": 1
+    },
+    "/": {
+      "tabWidth": 2
+    }
+  },
+  "excludeFiles": ["map/positions.txt"]
+}
