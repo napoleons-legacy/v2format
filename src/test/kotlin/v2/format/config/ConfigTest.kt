@@ -9,7 +9,6 @@ internal class ConfigTest {
 
     @Test
     fun `Test loadConfig`() {
-
         testConfig("/config/blank.config.json") {
             val default = FormatOptions()
 

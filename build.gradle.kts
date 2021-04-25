@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.4.10"
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
     antlr
     idea
 }
@@ -13,7 +13,7 @@ val junitVersion: String by project
 val mockkVersion: String by project
 
 group = "v2.format"
-version = "1.0"
+version = "1.2.1"
 
 repositories {
     mavenCentral()
@@ -36,19 +36,19 @@ sourceSets {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
-    implementation("com.github.ajalt.clikt:clikt:$cliktVersion")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", kotlinxSerializationVersion)
+    implementation("com.github.ajalt.clikt", "clikt", cliktVersion)
 
-    antlr("org.antlr:antlr4:$antlrVersion")
+    antlr("org.antlr", "antlr4", antlrVersion)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
+    testImplementation("io.mockk", "mockk", mockkVersion)
+    testImplementation("org.jetbrains.kotlin", "kotlin-reflect", "1.4.32")
 }
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 tasks {
@@ -58,12 +58,11 @@ tasks {
 
     compileKotlin {
         dependsOn(generateGrammarSource)
-        kotlinOptions.jvmTarget = "1.8"
-
+        kotlinOptions.jvmTarget = "11"
     }
 
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     generateGrammarSource {
@@ -76,6 +75,7 @@ tasks {
     }
 
     jar {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
         manifest {
             attributes["Main-Class"] = "v2.format.MainKt"
         }

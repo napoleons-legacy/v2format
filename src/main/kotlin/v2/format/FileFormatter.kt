@@ -1,5 +1,6 @@
 package v2.format
 
+import com.github.ajalt.clikt.output.TermUi.echo
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.Recognizer
@@ -24,7 +25,7 @@ class FileFormatter(private val modRootFolder: File) {
             val formattedProgram = formatProgram(file, options)
             file.writeText(formattedProgram, charset)
         } catch (e: Exception) {
-            println(e.message)
+            echo(e.message, err = true)
         }
     }
 

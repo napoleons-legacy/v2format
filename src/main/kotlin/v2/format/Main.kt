@@ -50,7 +50,8 @@ class Main : CliktCommand(help = "A program formatter for Victoria 2 mods.") {
         try {
             formatMod()
         } catch (e: Exception) {
-            println("Error: ${e.message}")
+            echo("Error: ${e.message}", err = true)
+            echo(getFormattedHelp())
         }
     }
 

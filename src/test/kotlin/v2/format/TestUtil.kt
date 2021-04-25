@@ -7,7 +7,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
 fun getResourceFile(resource: String): File =
-    File(File::class.java.getResource(resource).toURI())
+    File(Main::class.java.getResource(resource)!!.toURI())
 
 fun resetConfig() {
     val tree = Config.javaClass.getDeclaredField("configTree")
