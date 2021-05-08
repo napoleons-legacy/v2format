@@ -41,7 +41,6 @@ fragment LETTER:
 
 WS: [ \t] -> skip;
 
-
 COMMENT: '#' ~('\r' | '\n')* -> channel(COMMENTS_CHANNEL);
 NEWLINES: '\n'+ -> channel(NEWLINE_CHANNEL);
 CARRIAGE_RETURN: '\r' -> skip;

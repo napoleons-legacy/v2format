@@ -40,6 +40,8 @@ class Main : CliktCommand(help = "A program formatter for Victoria 2 mods.") {
         mustBeReadable = true
     )
 
+    private val modFinder = ModFinder()
+
     init {
         context {
             helpFormatter = CliktHelpFormatter(showDefaultValues = true)
@@ -56,8 +58,6 @@ class Main : CliktCommand(help = "A program formatter for Victoria 2 mods.") {
     }
 
     private fun formatMod() {
-        val modFinder = ModFinder()
-
         val formatModRoot = formatOptions?.modFile ?: modFinder.getModFromDirectory(File("."))
         val formatTarget = formatOptions?.file ?: formatModRoot
         val formatConfig = resolveConfig(formatModRoot)

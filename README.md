@@ -59,6 +59,7 @@ Without any external configuration, the style used is:
 {
   "paths": {
     "/": {
+      "useTab": false,
       "tabWidth": 4,
       "bracketSpacing": true,
       "assignmentSpacing": true,
@@ -69,6 +70,8 @@ Without any external configuration, the style used is:
   "excludeFiles": []
 }
 ```
+
+The ordering of each rule does not matter.
 
 ### Paths
 
@@ -88,7 +91,40 @@ cannot be solely composed of digits, otherwise it would be a number.
 
 #### Keys
 
-There are five rules that can be configured for each path.
+There are six rules that can be configured for each path.
+
+##### useTab
+
+The rule `useTab` if true, utilizes the tab character for indentation. If false, spaces will be used in its place with
+the number of spaces comprising one tab defined by the `tabWidth` rule.
+
+Default value: `false`
+
+Example:
+
+**true:**
+
+```
+block = {
+....inner = {
+........x = {}
+....}
+}
+```
+
+Each `.` is one space.
+
+**false:**
+
+```
+block = {
+————inner = {
+————————x = {}
+————}
+}
+```
+
+Each grouping of four `—` is one tab.
 
 ##### tabWidth
 
@@ -279,7 +315,7 @@ This will evaluate identically to the above section.
 
 Paths can omit the leading slash `/` at the start of every path such that `/map` and `map` as keys are identical.
 Furthermore, the usage of Windows backslashes `\\` is supported, but not recommended. Placing extra slashes such
-as `map///terrain` is undefined behavior and should be avoided.
+as `map///\\terrain` will work as if the path was `map/terrain`.
 
 ---
 

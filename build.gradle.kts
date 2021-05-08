@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "v2.format"
-version = "1.2.1"
+version = "1.3"
 
 val kotlinxSerializationVersion: String by project
 val cliktVersion: String by project

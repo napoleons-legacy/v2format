@@ -17,6 +17,9 @@
     },
     "nosingleexpr": {
       "singleLineBlock": false
+    },
+    "usetab": {
+      "useTab": true
     }
   }
 }

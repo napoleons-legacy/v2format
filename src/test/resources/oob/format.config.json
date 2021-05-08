@@ -6,17 +6,20 @@
     "2tab": {
       "tabWidth": 2
     },
-    "20wrap": {
+    "///20wrap": {
       "bracketWraparound": 20
     },
-    "noassignmentspace": {
+    "\\//\\noassignmentspace": {
       "assignmentSpacing": false
     },
-    "nobracketspace": {
+    "/\\/nobracketspace": {
       "bracketSpacing": false
     },
-    "nosingleexpr": {
+    "///nosingleexpr": {
       "singleLineBlock": false
+    },
+    "usetab": {
+      "useTab": true
     }
   }
 }
