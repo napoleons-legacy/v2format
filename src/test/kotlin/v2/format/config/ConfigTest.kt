@@ -3,7 +3,6 @@ package v2.format.config
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import v2.format.getResourceFile
-import v2.format.resetConfig
 
 internal class ConfigTest {
 
@@ -60,6 +59,6 @@ internal class ConfigTest {
         Config.loadConfig(getResourceFile(resource))
         block()
 
-        resetConfig()
+        Config.clearConfig()
     }
 }

@@ -1,9 +1,12 @@
 plugins {
-    kotlin("jvm") version "1.4.32"
-    kotlin("plugin.serialization") version "1.4.32"
+    kotlin("jvm") version "1.5.0"
+    kotlin("plugin.serialization") version "1.5.0"
     antlr
     idea
 }
+
+group = "v2.format"
+version = "1.2.1"
 
 val kotlinxSerializationVersion: String by project
 val cliktVersion: String by project
@@ -12,11 +15,19 @@ val antlrVersion: String by project
 val junitVersion: String by project
 val mockkVersion: String by project
 
-group = "v2.format"
-version = "1.2.1"
-
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", kotlinxSerializationVersion)
+    implementation("com.github.ajalt.clikt", "clikt", cliktVersion)
+
+    antlr("org.antlr", "antlr4", antlrVersion)
+
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
+    testImplementation("io.mockk", "mockk", mockkVersion)
 }
 
 val genDir = file("${project.buildDir}/generated-src/antlr/main/v2/format/antlr")
@@ -33,22 +44,6 @@ sourceSets {
             srcDirs.add(genDir)
         }
     }
-}
-
-dependencies {
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", kotlinxSerializationVersion)
-    implementation("com.github.ajalt.clikt", "clikt", cliktVersion)
-
-    antlr("org.antlr", "antlr4", antlrVersion)
-
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion)
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
-    testImplementation("io.mockk", "mockk", mockkVersion)
-    testImplementation("org.jetbrains.kotlin", "kotlin-reflect", "1.4.32")
-}
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 tasks {
@@ -89,4 +84,8 @@ tasks {
 
         archiveFileName.set("v2format.jar")
     }
+}
+
+configure<JavaPluginConvention> {
+    sourceCompatibility = JavaVersion.VERSION_11
 }

@@ -6,7 +6,6 @@ import org.antlr.v4.runtime.Recognizer
 import java.io.File
 
 class ClausewitzErrorListener(private val file: File) : BaseErrorListener() {
-
     override fun syntaxError(
         recognizer: Recognizer<*, *>?,
         offendingSymbol: Any?,

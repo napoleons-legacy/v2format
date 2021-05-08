@@ -20,7 +20,8 @@ class ModFinder {
         return file.resolve(getModFromModFile(firstModFile))
     }
 
-    fun getModFromModFile(modFile: File): File {
+    @Throws(IOException::class)
+    private fun getModFromModFile(modFile: File): File {
         val line = modFile.readLines().firstOrNull {
             it.trimStart().startsWith("path")
         } ?: throw IOException("No entry named 'path' for mod file '${modFile.name}'")

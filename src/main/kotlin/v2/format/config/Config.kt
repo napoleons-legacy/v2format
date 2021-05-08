@@ -14,7 +14,7 @@ object Config {
         val excludeFiles: List<String> = emptyList()
     )
 
-    private val configTree = ConfigTree()
+    private var configTree = ConfigTree()
     lateinit var excludeFiles: List<String>
 
     fun loadConfig(file: File) {
@@ -31,6 +31,10 @@ object Config {
         }
     }
 
+    fun clearConfig() {
+        configTree = ConfigTree()
+    }
+
     private fun buildTree(data: ConfigData) {
         data.paths.forEach { (path, opt) ->
             val levels = getLevels(path).toMutableList()
@@ -39,7 +43,7 @@ object Config {
     }
 
     private fun getLevels(s: String) = s.split('/', '\\')
-        .dropWhile(String::isBlank)
+        .filterNot(String::isBlank)
 
     operator fun get(key: String): FormatOptions {
         val levels = getLevels(key)

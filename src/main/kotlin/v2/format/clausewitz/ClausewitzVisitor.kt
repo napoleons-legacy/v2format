@@ -23,7 +23,7 @@ class ClausewitzVisitor(
         }
 
         dropLastNewlines()
-        appendln()
+        appendLine()
     }
 
     override fun visitAssignExpr(ctx: ClausewitzParser.AssignExprContext) =
@@ -85,7 +85,7 @@ class ClausewitzVisitor(
             }
         }
 
-        sb.dropLastNewlines().indentln()
+        sb.dropLastNewlines().indentLine()
     }
 
     private fun appendExprBlock(sb: StringBuilder, values: List<ClausewitzParser.BraceValueContext>) {
@@ -95,12 +95,12 @@ class ClausewitzVisitor(
             }
         }
 
-        sb.dropLastNewlines().indentln()
+        sb.dropLastNewlines().indentLine()
     }
 
     private fun appendEmptyBraceValue(sb: StringBuilder) {
         if (!options.singleLineBlock && sb.endsWith('{')) {
-            sb.indentln()
+            sb.indentLine()
         } else if (sb.endsWith('\n')) {
             sb.indent()
         }
@@ -120,7 +120,7 @@ class ClausewitzVisitor(
                 }
             }
 
-            sb.dropLastNewlines().indentln()
+            sb.dropLastNewlines().indentLine()
         } else {
             val firstValue = with(visit(first)) {
                 if (this is StringBuilder) {
@@ -134,16 +134,16 @@ class ClausewitzVisitor(
         }
     }
 
-    override fun visitTerminal(node: TerminalNode) = node.text
+    override fun visitTerminal(node: TerminalNode): String = node.text
 
     override fun defaultResult() = ""
 
     private fun anyCommentsAfter(first: ParserRuleContext): Boolean {
         for (idx in first.stop.tokenIndex + 1 until tokenStream.size()) {
-            val chan = tokenStream[idx].channel
-            if (chan == ClausewitzLexer.COMMENTS_CHANNEL) {
+            val channel = tokenStream[idx].channel
+            if (channel == ClausewitzLexer.COMMENTS_CHANNEL) {
                 return true
-            } else if (chan == ClausewitzLexer.DEFAULT_TOKEN_CHANNEL) {
+            } else if (channel == ClausewitzLexer.DEFAULT_TOKEN_CHANNEL) {
                 return false
             }
         }
@@ -215,12 +215,11 @@ class ClausewitzVisitor(
     private fun StringBuilder.appendCosmetic(start: Int, allowWhitespace: Boolean): StringBuilder =
         append(getCosmetic(start, allowWhitespace))
 
-    private fun StringBuilder.appendln(): StringBuilder = append('\n')
     private fun StringBuilder.indent(): StringBuilder = append(options.indent(indentation))
-    private fun StringBuilder.indentln(): StringBuilder = appendln().indent()
+    private fun StringBuilder.indentLine(): StringBuilder = appendLine().indent()
     private fun StringBuilder.cleanIndent(): StringBuilder = if (endsWith("\n")) {
         indent()
     } else {
-        indentln()
+        indentLine()
     }
 }

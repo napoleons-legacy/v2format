@@ -10,7 +10,6 @@ import v2.format.antlr.ClausewitzParser
 import v2.format.config.Config
 import v2.format.config.FormatOptions
 import v2.format.getResourceFile
-import v2.format.resetConfig
 import java.io.File
 
 internal class ClausewitzVisitorTest {
@@ -786,7 +785,7 @@ level3 = { #comment3
             }
         }
 
-        resetConfig()
+        Config.clearConfig()
     }
 
     private fun testFile(options: FormatOptions, original: File, test: File) {

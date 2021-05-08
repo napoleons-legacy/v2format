@@ -14,5 +14,7 @@
       "tabWidth": 2
     }
   },
-  "excludeFiles": ["map/positions.txt"]
+  "excludeFiles": [
+    "map/positions.txt"
+  ]
 }
